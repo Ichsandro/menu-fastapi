@@ -2,10 +2,10 @@
 
 from fastapi import FastAPI, HTTPException, Depends
 import json
-from authentication import AuthHandler
+from .authentication import AuthHandler
 
 def IsFound(id: int):
-    with open("menu.json", "r") as read_file:
+    with open("src/menu.json", "r") as read_file:
         data = json.load(read_file)
     for menu_item in data['menu']:
         if menu_item['id'] == id:
@@ -15,10 +15,10 @@ def IsFound(id: int):
             bool = False
     return bool
 
-with open("menu.json", "r") as read_file:
+with open("src/menu.json", "r") as read_file:
     data = json.load(read_file)
 
-with open("user.json", "r") as read_file:
+with open("src/user.json", "r") as read_file:
     users = json.load(read_file)
     
 app = FastAPI()
