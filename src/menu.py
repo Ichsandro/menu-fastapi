@@ -54,8 +54,8 @@ def login(user: User):
     token = auth_handler.encode_token(current_user['username'])
     return { 'token': token }
 
-@app.get('/menu', tags=['Menu'])
-def read_all_menu(current_user: users = Depends(auth_handler.auth_wrapper)):
+@app.get('/menu', tags=['Menu'], dependencies=[Depends(auth_handler.auth_wrapper)])
+def read_all_menu():
     return (data['menu'])
 
 @app.get('/menu/{item_id}', tags=['Menu'])
