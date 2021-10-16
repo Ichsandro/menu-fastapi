@@ -55,18 +55,18 @@ def login(user: User):
     return { 'token': token }
 
 @app.get('/menu', tags=['Menu'])
-async def read_all_menu(current_user: users = Depends(auth_handler.auth_wrapper)):
+def read_all_menu(current_user: users = Depends(auth_handler.auth_wrapper)):
     return (data['menu'])
 
 @app.get('/menu/{item_id}', tags=['Menu'])
-async def read_menu(item_id: int, current_user: users = Depends(auth_handler.auth_wrapper)):
+def read_menu(item_id: int, current_user: users = Depends(auth_handler.auth_wrapper)):
     for menu_item in data['menu']:
         if menu_item['id'] == item_id:
             return menu_item
     raise HTTPException(status_code=404, detail="Item not found")
     
 @app.post('/menu', tags=['Menu'])
-async def add_menu(item: Item, current_user: users = Depends(auth_handler.auth_wrapper)):
+def add_menu(item: Item, current_user: users = Depends(auth_handler.auth_wrapper)):
     if (IsFound(id = item.id)):
         raise HTTPException(status_code=404, detail="Item id is Used!")
     else:
@@ -77,7 +77,7 @@ async def add_menu(item: Item, current_user: users = Depends(auth_handler.auth_w
         return (item)
 
 @app.patch('/menu', tags=['Menu'])
-async def update_menu(item : Item, current_user: users = Depends(auth_handler.auth_wrapper)):
+def update_menu(item : Item, current_user: users = Depends(auth_handler.auth_wrapper)):
     if (IsFound(id = item.id)):
         x = {"id": item.id, "name": item.name}
         for menu_item in data['menu']:
@@ -90,7 +90,7 @@ async def update_menu(item : Item, current_user: users = Depends(auth_handler.au
         raise HTTPException(status_code=404, detail="Item not found!")
 
 @app.delete('/menu/{item_id}', tags=['Menu'])
-async def delete_menu(item_id: int, current_user: users = Depends(auth_handler.auth_wrapper)):
+def delete_menu(item_id: int, current_user: users = Depends(auth_handler.auth_wrapper)):
     if (IsFound(id = item_id)):
         for i in range(len(data['menu'])):
                 if data['menu'][i]['id'] == item_id:
