@@ -55,18 +55,18 @@ def login(user: User):
     return { 'token': token }
 
 @app.get('/menu', tags=['Menu'], dependencies=[Depends(auth_handler.auth_wrapper)])
-def read_all_menu():
+async def read_all_menu():
     return (data['menu'])
 
-@app.get('/menu/{item_id}', tags=['Menu'])
-def read_menu(item_id: int, current_user: users = Depends(auth_handler.auth_wrapper)):
+@app.get('/menu/{item_id}', tags=['Menu'], dependencies=[Depends(auth_handler.auth_wrapper)])
+def read_menu(item_id: int):
     for menu_item in data['menu']:
         if menu_item['id'] == item_id:
             return menu_item
     raise HTTPException(status_code=404, detail="Item not found")
     
-@app.post('/menu', tags=['Menu'])
-def add_menu(item: Item, current_user: users = Depends(auth_handler.auth_wrapper)):
+@app.post('/menu', tags=['Menu'], dependencies=[Depends(auth_handler.auth_wrapper)])
+def add_menu(item: Item):
     if (IsFound(id = item.id)):
         raise HTTPException(status_code=404, detail="Item id is Used!")
     else:
@@ -76,8 +76,8 @@ def add_menu(item: Item, current_user: users = Depends(auth_handler.auth_wrapper
             json.dump(data, write_file, indent = 3)
         return (item)
 
-@app.patch('/menu', tags=['Menu'])
-def update_menu(item : Item, current_user: users = Depends(auth_handler.auth_wrapper)):
+@app.patch('/menu', tags=['Menu'], dependencies=[Depends(auth_handler.auth_wrapper)])
+def update_menu(item : Item):
     if (IsFound(id = item.id)):
         x = {"id": item.id, "name": item.name}
         for menu_item in data['menu']:
@@ -89,8 +89,8 @@ def update_menu(item : Item, current_user: users = Depends(auth_handler.auth_wra
     else:
         raise HTTPException(status_code=404, detail="Item not found!")
 
-@app.delete('/menu/{item_id}', tags=['Menu'])
-def delete_menu(item_id: int, current_user: users = Depends(auth_handler.auth_wrapper)):
+@app.delete('/menu/{item_id}', tags=['Menu'], dependencies=[Depends(auth_handler.auth_wrapper)])
+def delete_menu(item_id: int):
     if (IsFound(id = item_id)):
         for i in range(len(data['menu'])):
                 if data['menu'][i]['id'] == item_id:
