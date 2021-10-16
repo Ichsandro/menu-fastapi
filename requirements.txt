@@ -1,6 +1,7 @@
 fastapi
-jinja2
-python-dotenv
-python-multipart
+pydantic
+pyjwt
 requests
 uvicorn
+bcrypt
+passlib

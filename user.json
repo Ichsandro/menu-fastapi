@@ -1,0 +1,12 @@
+{
+   "user": [
+      {
+         "username": "test",
+         "password": "$2b$12$eLyZImwaWvy540Fo5rAw/OM1sJHMVt0wDA6AdyODFEkRFp9S1B69W"
+      },
+      {
+         "username": "asdf",
+         "password": "$2b$12$XjWKu.dmYm3J7TpX3w6WUuSThlmeoTkA.4sDNFcyIAM0IBKp5DagO"
+      }
+   ]
+}
